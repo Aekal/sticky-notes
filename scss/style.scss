@@ -15,8 +15,12 @@ header {
 }
 
 .wrapper {
+	text-align: center;
 
-	.cards-container {
+	#cards-container {
+		margin: 10px;
+		display: flex;
+		flex-wrap: wrap;
 		min-height: 500px;
 	}
 
@@ -26,28 +30,59 @@ header {
 		border-radius: 50px;
 		background-color: $yellow;
 		cursor: pointer;
-		text-align: center;
 		box-shadow: 1px 4px 15px rgba(0,0,0,0.4);
+		border: 2px solid $yellow - 20;
 		margin: 15px auto 0;
-
+		transition: font-size .2s;
+		font-size: 20px;
+		color: $yellow - 150;
+		position: fixed;
+		bottom: 50px;
 
 		&:hover {
 			background-color: $yellow + 5;
 		}
+
+		&:focus {
+			outline: none;
+			border: 2px solid $yellow - 60;
+		}
 	}
 
 	.card {
-		display: inline-block;
 		margin: 15px;
 		box-sizing: border-box;
 		padding: 10px;
-		width: 250px;
+		width: calc(100% / 4 - 30px);
 		height: 300px;
-		background-color: $blue;
+		background-color: deepskyblue;
 		box-shadow: 1px 3px 10px rgba(0,0,0,0.5);
+		position: relative;
 
 		h2 {
 			margin: 0;
+			padding: 0;
+		}
+
+		.minus {
+			position: absolute;
+			color: rgba(0,0,0,0.4);
+			right: 0;
+			top: 0;
+			border: none;
+			background-color: transparent;
+			width: 30px;
+			height: 30px;
+			cursor: pointer;
+
+			&:hover {
+				color: rgba(0,0,0,1);
+			}
+
+			&:focus {
+				outline: none;
+				color: #000000;
+			}
 		}
 	}
 }
