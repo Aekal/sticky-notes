@@ -26,18 +26,21 @@ header {
 }
 
 #btn-create {
+	display: block;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 50px;
+	margin: 0 auto;
 	width: 60px;
 	height: 60px;
+	border: 2px solid $yellow - 20;
 	border-radius: 50px;
 	background-color: $yellow;
 	cursor: pointer;
 	box-shadow: 1px 4px 15px rgba(0,0,0,0.4);
-	border: 2px solid $yellow - 20;
-	margin: 15px auto 0;
 	font-size: 20px;
 	color: $yellow - 150;
-	position: fixed;
-	bottom: 50px;
 	&:hover {
 		background-color: $yellow + 5;
 	}
@@ -192,5 +195,25 @@ header {
 				background-color: $green;
 			}
 		}
+	}
+}
+
+@media all and (max-width: 1000px) {
+	#cards-container {
+		.card {
+			width: calc(100% / 2 - 30px);
+		}
+	}
+}
+
+@media all and (max-width: 420px) {
+	#cards-container {
+		.card {
+			width: 100%;
+		}
+	}
+
+	#btn-create {
+		bottom: 20px;
 	}
 }
