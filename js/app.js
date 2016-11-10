@@ -6,11 +6,23 @@ function createCard() {
 	var newCard = $("<div/>", {
 		class: "card",
 		click: function(e) {
-			if ($(e.target).is(".card")) {
-				$(this).find("input").focus();
+			if ($(e.target).is(".card") || $(e.target).is(".watermark")) {
+				$(this).find(".watermark").removeClass("visible");
+				var input = $(this).find("input");
+				input.addClass("visible");
+				input.focus();
 			}
 		}
 	}).appendTo($container);
+
+	$("<span/>", {
+		text: "Click to add new item",
+		class: "watermark visible"
+	}).appendTo(newCard);
+
+	// $("<h2/>", {
+	//
+	// });
 
 	$("<button/>", {
 		type: "button",
@@ -27,6 +39,7 @@ function createCard() {
 		type: "text",
 		blur: function() {
 			//createListItem()
+			$(this).removeClass("visible");
 		},
 		keypress: function(e) {
 			if((e.which == 13) && ($(this).val() !== "")) {
@@ -56,6 +69,9 @@ function createCard() {
 					type: "button",
 					class: "fa fa-minus-circle",
 					click: function() {
+						if ($(this).closest(".list").children().length === 1) {
+							$(".watermark").addClass("visible")
+						}
 						$(this).parent().remove();
 					}
 				}).appendTo(item);

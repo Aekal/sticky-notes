@@ -34,7 +34,6 @@ header {
 	box-shadow: 1px 4px 15px rgba(0,0,0,0.4);
 	border: 2px solid $yellow - 20;
 	margin: 15px auto 0;
-	transition: font-size .2s;
 	font-size: 20px;
 	color: $yellow - 150;
 	position: fixed;
@@ -59,6 +58,22 @@ header {
 	position: relative;
 	overflow-y: auto;
 
+	.watermark {
+		position: absolute;
+		margin: 0 auto;
+		top: 50%; left: 0; right:0;
+		transform: translateY(-50%);
+		cursor: default;
+		z-index: 0;
+		display: none;
+		font-size: 34px;
+		margin: 0 5px;;
+		color: rgba($gray, 0.3);
+
+		&.visible {
+			display: block;
+		}
+	}
 	h2 {
 		margin: 0;
 		padding: 0;
@@ -85,6 +100,7 @@ header {
 
 	input[type='text'] {
 		font-family: 'Roboto', sans-serif;
+		visibility: hidden;
 		font-size: 16px;
 		margin-top: 5px;
 		background-color: transparent;
@@ -93,6 +109,9 @@ header {
 		width: 100%;
 		box-sizing: border-box;
 		padding: 5px;
+		&.visible {
+			visibility: visible;
+		}
 		&::-webkit-input-placeholder {
 			color: #000000;
 		}
