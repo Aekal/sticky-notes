@@ -12,7 +12,7 @@ function createCard() {
 		}
 	}).appendTo($container);
 
-	var minusCardBtn = $("<button/>", {
+	$("<button/>", {
 		type: "button",
 		class: "btn-minus fa fa-minus",
 		click: function() {
@@ -20,9 +20,9 @@ function createCard() {
 		}
 	}).appendTo(newCard);
 
-	var list = $("<ul/>", {class: "list"}).appendTo(newCard);
+	$("<ul/>", {class: "list"}).appendTo(newCard);
 
-	var inputField = $("<input/>", {
+	$("<input/>", {
 		class: "new-elem",
 		type: "text",
 		blur: function() {
@@ -37,28 +37,22 @@ function createCard() {
 					click: function (e) {
 						$(this).find("span").toggleClass("selected");
 
-						var checkbox = $(this).find(".checkbox")
+						var checkbox = $(this).find(".checkbox");
 						if (checkbox.hasClass("fa-square-o")) {
-							checkbox
-							.removeClass("fa-square-o")
-							.addClass("fa-check-square-o")
+							checkbox.removeClass("fa-square-o")
+							.addClass("fa-check-square-o");
 						} else {
-							checkbox
-							.removeClass("fa-check-square-o")
-							.addClass("fa-square-o")
+							checkbox.removeClass("fa-check-square-o")
+							.addClass("fa-square-o");
 						}
 					}
 				}).appendTo(list);
 
-				var checkbox = $("<div/>",{
-					class: "checkbox fa fa-square-o",
-				}).appendTo(item);
+				$("<div/>", {class: "checkbox fa fa-square-o"}).appendTo(item);
 
-				var itemText = $("<span/>", {
-					text: $(this).val()
-				}).appendTo(item);
+				$("<span/>", {text: $(this).val()}).appendTo(item);
 
-				var minusItemBtn = $("<button/>", {
+				$("<button/>", {
 					type: "button",
 					class: "fa fa-minus-circle",
 					click: function() {
@@ -86,7 +80,7 @@ function createCard() {
 	$(".color").click(function () {
 		var selectedColor = $(this).css("background-color");
 		$(this).closest(".card").css("background-color", selectedColor);
-	})
+	});
  }
 
  $(".card").on("click", function(e) {
