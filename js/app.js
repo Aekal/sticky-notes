@@ -20,13 +20,22 @@ function createCard() {
 		class: "watermark visible"
 	}).appendTo(newCard);
 
-	// $("<h2/>", {
-	//
-	// });
+	$("<h2/>", {
+		text: "title",
+		class: "card-title",
+		contenteditable: true,
+		keypress: function(e) {
+			if (e.which == 13) {
+				console.log(this);
+				$(this).blur();
+				window.getSelection().removeAllRanges();
+			}
+		}
+	}).appendTo(newCard);
 
 	$("<button/>", {
 		type: "button",
-		class: "btn-minus fa fa-minus",
+		class: "btn-minus fa fa-trash",
 		click: function() {
 			$(this).parent().remove();
 		}
@@ -34,7 +43,7 @@ function createCard() {
 
 	$("<ul/>", {class: "list"}).appendTo(newCard);
 
-	$("<input/>", {
+	var input = $("<input/>", {
 		class: "new-elem",
 		type: "text",
 		blur: function() {
@@ -80,6 +89,10 @@ function createCard() {
 			}
 		}
 	}).appendTo(newCard);
+
+	// input.bind("blur keypress", function(e) {
+	// 	testFunction();
+	// });
 
 	var colorList = $("<ul/>", {
 		class: "card-colors"
