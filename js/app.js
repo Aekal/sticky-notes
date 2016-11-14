@@ -1,127 +1,120 @@
-$(document).ready(function() {
+var Note = (function() {
+	createCard();
+	$("#btn-create").on("click", createCard);
 
-function createCard() {
-	var $container = $("#cards-container");
+	function createCard() {
+		var $container = $("#cards-container");
 
-	var newCard = $("<div/>", {
-		class: "card",
-		click: function(e) {
-			if ($(e.target).is(".card") || $(e.target).is(".watermark")) {
-				$(this).find(".watermark").removeClass("visible");
-				var input = $(this).find("input");
-				input.addClass("visible");
-				input.focus();
+		$("<div/>", {
+			class: "card",
+			click: function(e) {
+				if ($(e.target).is(".card") || $(e.target).is(".watermark")) {
+					$(this).find(".watermark").removeClass("visible");
+					var input = $(this).find("input");
+					input.addClass("visible");
+					input.focus();
+				}
 			}
-		}
-	}).appendTo($container);
-
-	$("<span/>", {
-		text: "Click to add new item",
-		class: "watermark visible"
-	}).appendTo(newCard);
-
-	$("<h2/>", {
-		text: "title",
-		class: "card-title",
-		contenteditable: true,
-		keypress: function(e) {
-			if (e.which == 13) {
-				console.log(this);
-				$(this).blur();
-				window.getSelection().removeAllRanges();
+		})
+		.append($("<span/>", {
+			text: "Click to add new item",
+			class: "watermark visible"
+		}))
+		.append($("<h2/>", {
+			text: "title",
+			class: "card-title",
+			contenteditable: true,
+			keypress: function(e) {
+				if (e.which == 13) {
+					$(this).blur();
+					window.getSelection().removeAllRanges();
+				}
 			}
-		}
-	}).appendTo(newCard);
-
-	$("<button/>", {
-		type: "button",
-		class: "btn-minus fa fa-trash",
-		click: function() {
-			$(this).parent().remove();
-		}
-	}).appendTo(newCard);
-
-	$("<ul/>", {class: "list"}).appendTo(newCard);
-
-	var input = $("<input/>", {
-		class: "new-elem",
-		type: "text",
-		blur: function() {
-			//createListItem()
-			$(this).removeClass("visible");
-		},
-		keypress: function(e) {
-			if((e.which == 13) && ($(this).val() !== "")) {
-				var list = $(this).parent().find(".list");
-
-				var item = $("<li/>", {
-					class: "item",
-					click: function (e) {
-						$(this).find("span").toggleClass("selected");
-
-						var checkbox = $(this).find(".checkbox");
-						if (checkbox.hasClass("fa-square-o")) {
-							checkbox.removeClass("fa-square-o")
-							.addClass("fa-check-square-o");
-						} else {
-							checkbox.removeClass("fa-check-square-o")
-							.addClass("fa-square-o");
-						}
+		}))
+		.append($("<button/>", {
+			type: "button",
+			class: "btn-minus fa fa-trash",
+			click:
+			function() {
+				$(this).parent().remove();
+			}
+		}))
+		.append($("<ul/>", {class: "list"}))
+		.append($("<input/>", {
+				class: "new-elem",
+				type: "text",
+				blur: function(e) {
+					if ($(this).val() !== "") {
+						focusOutEvent(e);
 					}
-				}).appendTo(list);
-
-				$("<div/>", {class: "checkbox fa fa-square-o"}).appendTo(item);
-
-				$("<span/>", {text: $(this).val()}).appendTo(item);
-
-				$("<button/>", {
-					type: "button",
-					class: "fa fa-minus-circle",
-					click: function() {
-						if ($(this).closest(".list").children().length === 1) {
-							$(".watermark").addClass("visible")
-						}
-						$(this).parent().remove();
+					$(this).removeClass("visible");
+				},
+				keypress: function(e) {
+					if((e.which == 13) && ($(this).val() !== "")) {
+						focusOutEvent(e);
 					}
-				}).appendTo(item);
+				}
+			})
+		)
+		.append($("<ul/>", {
+				class: "card-colors"
+			}).append(createColorPalette))
+		.appendTo($container);
+	};
 
-				$(this).val("");
+	function focusOutEvent(e) {
+		var that = $(e.target);
+		var list = $(that).parent().find(".list");
+
+		var item = $("<li/>", {
+			class: "item",
+			click: function (e) {
+				$(this).find("span").toggleClass("selected");
+
+				var checkbox = $(this).find(".checkbox");
+				if (checkbox.hasClass("fa-square-o")) {
+					checkbox.removeClass("fa-square-o")
+					.addClass("fa-check-square-o");
+				} else {
+					checkbox.removeClass("fa-check-square-o")
+					.addClass("fa-square-o");
+				}
 			}
-		}
-	}).appendTo(newCard);
+		}).appendTo(list);
 
-	// input.bind("blur keypress", function(e) {
-	// 	testFunction();
-	// });
+		$("<div/>", {class: "checkbox fa fa-square-o"}).appendTo(item);
 
-	var colorList = $("<ul/>", {
-		class: "card-colors"
-	}).appendTo(newCard);
+		$("<span/>", {text: $(that).val()}).appendTo(item);
 
-	var colorItems = [];
-	for (i = 0; i < 3; i++) {
-		colorItems.push(
-			$("<li/>", {
-				class: "color"
-			}).appendTo(colorList)
-		);
+		$("<button/>", {
+			type: "button",
+			class: "fa fa-minus-circle",
+			click: function() {
+				if ($(this).closest(".list").children().length === 1) {
+					$(".watermark").addClass("visible")
+				}
+				$(this).parent().remove();
+			}
+		}).appendTo(item);
+
+		$(that).val("");
 	}
-	$(".color").click(function () {
-		var selectedColor = $(this).css("background-color");
-		$(this).closest(".card").css("background-color", selectedColor);
-	});
- }
 
- $(".card").on("click", function(e) {
-	 if ($(e.target).is(".card")) {
-		 $(this).find("input").focus();
-	 }
- });
+	function createColorPalette() {
+		var colorPalette = [];
+		for (var i = 0; i < 3; i++) {
+			colorPalette[i] = $("<li/>", {
+				class: "color",
+				click: function() {
+					var selectedColor = $(this).css("background-color");
+					$(this).closest(".card").css("background-color", selectedColor);
+				}
+			})
+		}
+		return colorPalette;
+	}
 
- $("#btn-create").on("click", function() {
-	 createCard();
- });
-
- createCard();
-
-});
+	return {
+		createCard : createCard
+	};
+}());
