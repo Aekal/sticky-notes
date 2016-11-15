@@ -2,6 +2,7 @@ var gulp        = require('gulp');
 var browserSync = require('browser-sync').create();
 var sass        = require('gulp-sass');
 var sourcemaps  = require('gulp-sourcemaps');
+var autoprefixer= require('gulp-autoprefixer');
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function() {
@@ -24,6 +25,8 @@ gulp.task('sass', function() {
             browserSync.notify(err.message, 3000); // Display error
             this.emit('end'); // Prevent gulp from catching the error and exiting the watch process
         }))
+        .pipe(autoprefixer({
+          browsers: ['Safari >= 6.1', 'IE >= 10', 'Firefox >= 28'], cascade: false}))
         .pipe(sourcemaps.write("./maps"))
         .pipe(gulp.dest("./css"))
         .pipe(browserSync.stream());
