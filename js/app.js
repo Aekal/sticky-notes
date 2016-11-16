@@ -37,7 +37,9 @@ var Note = (function() {
 			type: "button",
 			class: "btn-minus fa fa-trash",
 			click: function() {
-				$(this).parent().remove();
+				$(this).parent().fadeOut(function() {
+					$(this).remove();
+				});
 			}
 		}))
 		//Card's internal container - to separate list of items from color palette
@@ -92,7 +94,15 @@ var Note = (function() {
 		})
 		.append(createColorPalette))
 		//Add everything to main container
-		.appendTo($container);
+		.hide().fadeIn().appendTo($container);
+
+		//Scroll to new card (Mobile)
+		if (($(window).width() < 800) && ($(".card").length > 1)) {
+			var $lastCard = $(".card:last");
+			$("html, body").animate({
+				scrollTop: $lastCard.offset().top
+			},700);
+		}
 	}
 
 	function createItem(e) {
