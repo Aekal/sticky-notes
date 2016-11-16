@@ -9,7 +9,7 @@ var Note = (function() {
 			class: "card",
 			click: function(e) {
 				if ($(e.target).is(".list-container") || $(e.target).is(".watermark")) {
-					$(this).find(".watermark").removeClass("visible");
+					showWatermark(e, false);
 					var input = $(this).find("input");
 					input.addClass("visible");
 					input.focus();
@@ -56,8 +56,8 @@ var Note = (function() {
 					if ($(this).val() !== "") {
 						createItem(e);
 					} else {
-						if (($(this).parent().find(".list").children().length == 0)) {
-							$(".watermark").addClass("visible");
+						if (($(this).parent().find(".list").children().length === 0)) {
+							showWatermark(e, true);
 						}
 					}
 					$(this).removeClass("visible");
@@ -74,10 +74,13 @@ var Note = (function() {
 				.append($("<button/>", {
 					type: "button",
 					class: "remove-selected-btn fa fa-eraser",
-					click: function() {
+					click: function(e) {
 						var $selectedItems = $(this).closest(".list-container").find(".selected");
 						for (i = 0; i < $selectedItems.length; i++) {
 							$($selectedItems[i]).parent().remove();
+						}
+						if ($(".item").length === 0) {
+							showWatermark(e, true);
 						}
 					}
 				}))
@@ -110,7 +113,7 @@ var Note = (function() {
 		var list = $(input).parent().find(".list");
 
 		//Create list item
-		var item = $("<li/>", {
+		$("<li/>", {
 			class: "item",
 			//Check done items
 			click: function (e) {
@@ -133,9 +136,9 @@ var Note = (function() {
 			.append($("<button/>", {
 				type: "button",
 				class: "fa fa-minus-circle",
-				click: function() {
+				click: function(e) {
 					if ($(this).closest(".list").children().length === 1) {
-						$(".watermark").addClass("visible");
+						showWatermark(e, true);
 					}
 					$(this).parent().remove();
 				}
@@ -159,6 +162,15 @@ var Note = (function() {
 			});
 		}
 		return colorPalette;
+	}
+
+	function showWatermark(e, isVisible) {
+		var $watermark = $(e.target).closest(".card").find(".watermark");
+		if (isVisible) {
+			$watermark.addClass("visible");
+		} else {
+			$watermark.removeClass("visible");
+		}
 	}
 
 	return {
