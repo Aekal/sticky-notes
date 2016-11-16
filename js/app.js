@@ -24,7 +24,6 @@ var Note = (function() {
 		//Card's Title
 		.append($("<h2/>", {
 			text: "title",
-			class: "card-title",
 			contenteditable: true,
 			keypress: function(e) {
 				if (e.which == 13) {
@@ -67,6 +66,25 @@ var Note = (function() {
 					}
 				}
 			}))
+			//Card's button container
+			.append($("<div/>", {class: "btn-selected-container"})
+				//Button for remove selected items
+				.append($("<button/>", {
+					type: "button",
+					class: "remove-selected-btn fa fa-eraser",
+					click: function() {
+						var $selectedItems = $(this).closest(".list-container").find(".selected");
+						for (i = 0; i < $selectedItems.length; i++) {
+							$($selectedItems[i]).parent().remove();
+						}
+					}
+				}))
+				//Tooltip for button
+				.append($("<span/>", {
+					class: "tooltip",
+					text: "Remove selected items"
+				}))
+			)
 		)
 		//Card's Color Palette
 		.append($("<ul/>", {
