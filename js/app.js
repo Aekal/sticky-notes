@@ -42,6 +42,29 @@ var Note = (function() {
 				});
 			}
 		}))
+		//Card's button container
+		.append($("<div/>", {class: "btn-selected-container"})
+			//Button for remove selected items
+			.append($("<button/>", {
+				type: "button",
+				class: "remove-selected-btn fa fa-eraser",
+				click: function(e) {
+					var $selectedItems = $(this).parent().next().find(".selected");
+					console.log($selectedItems);
+					for (i = 0; i < $selectedItems.length; i++) {
+						$($selectedItems[i]).parent().remove();
+					}
+					if ($(".item").length === 0) {
+						showWatermark(e, true);
+					}
+				}
+			}))
+			//Tooltip for button
+			.append($("<span/>", {
+				class: "tooltip",
+				text: "Remove selected items"
+			}))
+		)
 		//Card's internal container - to separate list of items from color palette
 		.append($("<div/>", {
 			class: "list-container"
@@ -67,28 +90,6 @@ var Note = (function() {
 					}
 				}
 			}))
-			//Card's button container
-			.append($("<div/>", {class: "btn-selected-container"})
-				//Button for remove selected items
-				.append($("<button/>", {
-					type: "button",
-					class: "remove-selected-btn fa fa-eraser",
-					click: function(e) {
-						var $selectedItems = $(this).closest(".list-container").find(".selected");
-						for (i = 0; i < $selectedItems.length; i++) {
-							$($selectedItems[i]).parent().remove();
-						}
-						if ($(".item").length === 0) {
-							showWatermark(e, true);
-						}
-					}
-				}))
-				//Tooltip for button
-				.append($("<span/>", {
-					class: "tooltip",
-					text: "Remove selected items"
-				}))
-			)
 		)
 		//Card's Color Palette
 		.append($("<ul/>", {
@@ -116,12 +117,12 @@ var Note = (function() {
 			//Check done items
 			click: function (e) {
 				$(this).find("span").toggleClass("selected");
-				var checkbox = $(this).find(".checkbox");
-				if (checkbox.hasClass("fa-square-o")) {
-					checkbox.removeClass("fa-square-o")
+				var $checkbox = $(this).find(".checkbox");
+				if ($checkbox.hasClass("fa-square-o")) {
+					$checkbox.removeClass("fa-square-o")
 					.addClass("fa-check-square-o");
 				} else {
-					checkbox.removeClass("fa-check-square-o")
+					$checkbox.removeClass("fa-check-square-o")
 					.addClass("fa-square-o");
 				}
 			}
