@@ -35,7 +35,7 @@ var Note = (function() {
 		//Card's remove button
 		.append($("<button/>", {
 			type: "button",
-			class: "btn-minus fa fa-trash",
+			class: "btn-remove fa fa-trash",
 			click: function() {
 				$(this).parent().fadeOut(function() {
 					$(this).remove();
@@ -50,13 +50,12 @@ var Note = (function() {
 			.append($("<ul/>", {class: "list"}))
 			//Input to add new items
 			.append($("<input/>", {
-				class: "new-elem",
 				type: "text",
 				blur: function(e) {
 					if ($(this).val() !== "") {
 						createItem(e);
 					} else {
-						if (($(this).parent().find(".list").children().length === 0)) {
+						if (($(this).parent().find(".item").length === 0)) {
 							showWatermark(e, true);
 						}
 					}
@@ -111,7 +110,6 @@ var Note = (function() {
 	function createItem(e) {
 		var input = $(e.target);
 		var list = $(input).parent().find(".list");
-
 		//Create list item
 		$("<li/>", {
 			class: "item",
@@ -145,14 +143,13 @@ var Note = (function() {
 			}))
 			//Add item to list
 		.appendTo(list);
-
 		//Clear input field
 		$(input).val("");
 	}
 
 	function createColorPalette() {
 		var colorPalette = [];
-		for (var i = 0; i < 3; i++) {
+		for (i = 0; i < 3; i++) {
 			colorPalette[i] = $("<li/>", {
 				class: "color",
 				click: function() {
