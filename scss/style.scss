@@ -261,6 +261,22 @@ header {
 	}
 }
 
+footer {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	font-size: 14px;
+	margin: 10px;
+
+	p {
+		margin: 0;
+	}
+
+	a {
+		color: #000000;
+	}
+}
+
 @media all and (max-width: 1000px) {
 	.card {
 		width: calc(100% / 2 - 30px);
@@ -284,5 +300,9 @@ header {
 @media all and (max-width: 420px) {
 	.card {
 		width: 100%;
+	}
+
+	footer {
+		display: none;
 	}
 }
