@@ -150,13 +150,14 @@ var Note = (function() {
 
 	function createColorPalette() {
 		var colorPalette = [];
+		function changeColor() {
+			var selectedColor = $(this).css("background-color");
+			$(this).closest(".card").css("background-color", selectedColor);
+		}
 		for (i = 0; i < 3; i++) {
 			colorPalette[i] = $("<li/>", {
 				class: "color",
-				click: function() {
-					var selectedColor = $(this).css("background-color");
-					$(this).closest(".card").css("background-color", selectedColor);
-				}
+				click: changeColor
 			});
 		}
 		return colorPalette;
