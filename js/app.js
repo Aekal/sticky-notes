@@ -23,6 +23,7 @@ var Note = (function() {
 		}))
 		//Card's Title
 		.append($("<h2/>", {
+			"data-tooltip": "Change title",
 			text: "title",
 			contenteditable: true,
 			keypress: function(e) {
@@ -35,19 +36,21 @@ var Note = (function() {
 		//Card's remove button
 		.append($("<button/>", {
 			type: "button",
-			class: "btn-remove fa fa-trash",
+			class: "btn-remove",
+			"data-tooltip": "Remove note",
 			click: function() {
 				$(this).parent().fadeOut(function() {
 					$(this).remove();
 				});
 			}
-		}))
+		}).append($("<span/>", { class: "fa fa-trash" })))
 		//Card's button container
 		.append($("<div/>", {class: "btn-selected-container"})
 			//Button for remove selected items
 			.append($("<button/>", {
 				type: "button",
-				class: "remove-selected-btn fa fa-eraser",
+				class: "remove-selected-btn",
+				"data-tooltip": "Remove selected items",
 				click: function(e) {
 					var $selectedItems = $(this).parent().next().find(".selected");
 					console.log($selectedItems);
@@ -58,13 +61,8 @@ var Note = (function() {
 						showWatermark(e, true);
 					}
 				}
-			}))
-			//Tooltip for button
-			.append($("<span/>", {
-				class: "tooltip",
-				text: "Remove selected items"
-			}))
-		)
+			})
+			.append($("<span/>", { class: "fa fa-eraser" }))))
 		//Card's internal container - to separate list of items from color palette
 		.append($("<div/>", {
 			class: "list-container"
@@ -133,15 +131,15 @@ var Note = (function() {
 			.append($("<span/>", {text: $(input).val()}))
 			//Item's remove button
 			.append($("<button/>", {
+				"data-tooltip-s": "Remove item",
 				type: "button",
-				class: "fa fa-minus-circle",
 				click: function(e) {
 					if ($(this).closest(".list").children().length === 1) {
 						showWatermark(e, true);
 					}
 					$(this).parent().remove();
 				}
-			}))
+			}).append($("<span/>", { class: "fa fa-minus-circle"} )))
 			//Add item to list
 		.appendTo(list);
 		//Clear input field
